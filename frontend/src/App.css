@@ -2204,9 +2204,10 @@ body {
   border: 1px solid rgba(148, 163, 184, 0.16);
   border-radius: 20px;
 }
-.deck-bg-fire      { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/charizard.png') right 30% / 60% auto no-repeat, #1b2235; }
-.deck-bg-psychic   { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/mewto.png')     right 30% / 60% auto no-repeat, #1b2235; }
-.deck-bg-lightning { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/pikachu.png')   right 30% / 60% auto no-repeat, #1b2235; }
+/* scoped to the picker buttons so the full-screen deck transition keeps its own art */
+.deck-choice-btn.deck-bg-fire      { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/charizard.png') right 30% / 60% auto no-repeat, #1b2235; }
+.deck-choice-btn.deck-bg-psychic   { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/mewto.png')     right 30% / 60% auto no-repeat, #1b2235; }
+.deck-choice-btn.deck-bg-lightning { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/pikachu.png')   right 30% / 60% auto no-repeat, #1b2235; }
 .deck-choice-btn { border-radius: 12px; }
 /* equal side columns keep Active exactly centred */
 .field-content > .bench-zone,
