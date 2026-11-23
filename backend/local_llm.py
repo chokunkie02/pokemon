@@ -1,4 +1,5 @@
 import os
+import threading
 from llama_cpp import Llama
 
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,8 +10,15 @@ MODEL_PATH = os.environ.get(
 
 # Singleton instance
 _llm_instance = None
+# llama.cpp is not thread-safe: two AI background tasks calling the model at once
+# crash CUDA (access violation / GGML_ASSERT pool_used). Run one call at a time.
+_llm_lock = threading.RLock()
 
 def get_llm():
+    with _llm_lock:
+        return _load_llm()
+
+def _load_llm():
     global _llm_instance
     if _llm_instance is None:
         print(f"[Local LLM] Loading local model from {MODEL_PATH} with n_gpu_layers=-1...")
@@ -31,18 +39,18 @@ def query_local_llm(system_prompt: str, user_prompt: str, max_tokens: int = 256)
     Returns the string text generated.
     max_tokens: Reduced default to 256 for faster responses (was 1024).
     """
-    llm = get_llm()
-    
     # Strict ChatML format required by Qwen2.5 instruct
     prompt = f"<|im_start|>system\n{system_prompt}<|im_end|>\n<|im_start|>user\n{user_prompt}<|im_end|>\n<|im_start|>assistant\n"
-    
-    response = llm(
-        prompt,
-        max_tokens=max_tokens,
-        temperature=0.1,
-        stop=["<|im_end|>", "<|im_start|>"],
-        echo=False
-    )
+
+    with _llm_lock:
+        llm = _load_llm()
+        response = llm(
+            prompt,
+            max_tokens=max_tokens,
+            temperature=0.1,
+            stop=["<|im_end|>", "<|im_start|>"],
+            echo=False
+        )
     
     output_text = response['choices'][0]['text'].strip()
     return output_text

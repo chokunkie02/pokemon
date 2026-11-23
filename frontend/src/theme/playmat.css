@@ -355,3 +355,19 @@
 .game-container .energy-stats-row { margin: 0; padding: 0; }
 .game-container .board { overflow: visible; }
 .game-container .field-content { overflow: visible; }
+/* Deck-start transition: loading pill dead-centre on the deck cover */
+.deck-transition-loading {
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: rgba(3, 7, 18, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(253, 230, 138, 0.25), 0 12px 40px rgba(0, 0, 0, 0.5);
+  font-family: var(--display);
+  font-size: 20px;
+}
+.deck-transition-spinner { width: 26px; height: 26px; border-top-color: #fde68a; }
