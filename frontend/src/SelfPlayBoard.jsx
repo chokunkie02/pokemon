@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import GameFx from './fx/GameFx';
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -723,6 +724,7 @@ export default function SelfPlayBoard({ onBack }) {
     return (
       <div className="hp-bar-container" style={{ width }}>
         <div className="hp-bar-bg">
+          <div className="hp-bar-trail" style={{ width: `${pct}%` }} />
           <div className="hp-bar-fill" style={{
             width: `${pct}%`,
             background: getHpColor(current, max),
@@ -745,7 +747,7 @@ export default function SelfPlayBoard({ onBack }) {
     const isPlayer1 = player.name === p1.name;
 
     return (
-      <div className={`player-area ${isPlayer1 ? 'player-bottom' : 'player-top'}`}>
+      <div data-player={player.name} className={`player-area ${isPlayer1 ? 'player-bottom' : 'player-top'}`}>
         <div className="player-info-row">
           {isGoopyAI ? (
             <div className={`ai-avatar-wrapper ${isMyTurn ? 'ai-avatar-thinking' : ''}`}>
@@ -918,7 +920,7 @@ export default function SelfPlayBoard({ onBack }) {
             return (
               <div
                 key={`${cardId}-${idx}`}
-                className={`hand-card ${highlightBasic ? 'highlight-basic' : ''} ${!canInteract ? 'disabled' : ''} ${isSelected ? 'active-selection' : ''}`}
+                className={`hand-card ${actions.length ? 'playable' : ''} ${highlightBasic ? 'highlight-basic' : ''} ${!canInteract ? 'disabled' : ''} ${isSelected ? 'active-selection' : ''}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   if (!canInteract) return;
@@ -1021,6 +1023,7 @@ export default function SelfPlayBoard({ onBack }) {
   // ---------- Main Render ----------
   return (
     <div className="game-container">
+      <GameFx state={gameState} />
       {/* Top Bar */}
       <div className="top-bar">
         <div className="top-bar-logo">

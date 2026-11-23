@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import GameFx from './fx/GameFx';
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -748,6 +749,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
     return (
       <div className="hp-bar-container" style={{ width }}>
         <div className="hp-bar-bg">
+          <div className="hp-bar-trail" style={{ width: `${pct}%` }} />
           <div className="hp-bar-fill" style={{
             width: `${pct}%`,
             background: getHpColor(current, max),
@@ -772,7 +774,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
     const deckOrbMap = { fire: 'f.png', psychic: 'p.png', lightning: 'e.png' };
 
     return (
-      <div className={`player-field ${isMyTurn ? 'is-turn' : ''} ${isOpponent ? 'opponent' : 'player'} energy-field-${player.energy_type || 'colorless'}`}>
+      <div data-player={player.name} className={`player-field ${isMyTurn ? 'is-turn' : ''} ${isOpponent ? 'opponent' : 'player'} energy-field-${player.energy_type || 'colorless'}`}>
         {/* Header */}
         <div className="field-header">
           {isGoopyAI ? (
@@ -982,7 +984,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
             return (
               <div
                 key={`${cardId}-${idx}`}
-                className={`hand-card ${highlightBasic ? 'highlight-basic' : ''} ${!canInteract ? 'disabled' : ''} ${isSelected ? 'active-selection' : ''} ${isGoopyAI && isTrueBattle ? 'hidden-card' : ''}`}
+                className={`hand-card ${actions.length ? 'playable' : ''} ${highlightBasic ? 'highlight-basic' : ''} ${!canInteract ? 'disabled' : ''} ${isSelected ? 'active-selection' : ''} ${isGoopyAI && isTrueBattle ? 'hidden-card' : ''}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   if (!canInteract) return;
@@ -1090,6 +1092,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
   // ---------- Main Render ----------
   return (
     <div className="game-container">
+      <GameFx state={gameState} humanName="Shogun" />
       {/* Top Bar */}
       <div className="top-bar">
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -1252,7 +1255,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
             <div className="modal-title">📋 ประวัติการเล่น</div>
             <div className="log-modal-entries" ref={logModalRef}>
               {action_log.map((entry, i) => (
-                <div key={i} className={`log-modal-entry ${i === action_log.length - 1 ? 'log-modal-entry-latest' : ''}`}>
+                <div key={i} className={`log-modal-entry ${/Goopy AI/.test(entry.message) ? 'log-by-ai' : 'log-by-human'} ${i === action_log.length - 1 ? 'log-modal-entry-latest' : ''}`}>
                   <span className="log-modal-turn">T{entry.turn}</span>
                   <span className="log-modal-msg">{entry.message}</span>
                 </div>

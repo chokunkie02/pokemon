@@ -1,0 +1,198 @@
+/* ===== Game-feel effects layer ===== */
+.fx-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 900;
+  image-rendering: pixelated;
+}
+
+/* floating numbers */
+.fx-float {
+  position: fixed;
+  z-index: 950;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', 'Kanit', monospace;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 1px;
+  animation: fx-float-up 1.25s cubic-bezier(.2, .8, .3, 1) forwards;
+  text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  white-space: nowrap;
+}
+.fx-float.dmg { color: #fff; }
+.fx-float.dmg.big { color: #ffd23f; font-size: 30px; }
+.fx-float.heal { color: #4ade80; }
+.fx-float.ko { color: #ff4d4d; font-size: 38px; }
+@keyframes fx-float-up {
+  0%   { opacity: 0; transform: translate(-50%, -30%) scale(.4); }
+  15%  { opacity: 1; transform: translate(-50%, -70%) scale(1.25); }
+  30%  { transform: translate(-50%, -80%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -190%) scale(1); }
+}
+
+/* attacker lunge / target hit */
+.fx-lunge { animation: fx-lunge .42s cubic-bezier(.3, 0, .2, 1); }
+@keyframes fx-lunge {
+  0%, 100% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(calc(var(--lunge-y, -24px) * -0.25)) scale(.97); }
+  60% { transform: translateY(var(--lunge-y, -24px)) scale(1.06); }
+}
+.fx-hit { animation: fx-hit .5s ease-out; }
+.fx-hit img { animation: fx-flash .5s ease-out; }
+@keyframes fx-hit {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-9px) rotate(-2deg); }
+  30% { transform: translateX(8px) rotate(2deg); }
+  45% { transform: translateX(-6px); }
+  60% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+@keyframes fx-flash {
+  0%   { filter: brightness(3) saturate(0); }
+  40%  { filter: brightness(1.4) sepia(1) hue-rotate(-40deg) saturate(4); }
+  100% { filter: none; }
+}
+
+/* screen shake */
+.fx-shake { animation: fx-shake .45s linear; }
+@keyframes fx-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 3px); }
+  40% { transform: translate(5px, -4px); }
+  60% { transform: translate(-4px, 2px); }
+  80% { transform: translate(3px, -1px); }
+}
+
+/* card played / evolved */
+.fx-pop { animation: fx-pop .5s cubic-bezier(.2, 1.6, .4, 1); }
+@keyframes fx-pop {
+  0% { transform: scale(.6) translateY(18px); opacity: .3; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* energy attached */
+.fx-charge img { animation: fx-charge .7s ease-out; }
+@keyframes fx-charge {
+  0% { filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0)); }
+  40% { filter: drop-shadow(0 0 14px rgba(255, 240, 150, .95)) brightness(1.25); }
+  100% { filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0)); }
+}
+
+/* prize taken */
+.fx-prize { animation: fx-prize .9s ease-out; }
+@keyframes fx-prize {
+  0% { transform: scale(1); filter: none; }
+  30% { transform: scale(1.35); filter: drop-shadow(0 0 12px #fbbf24) brightness(1.6); }
+  100% { transform: scale(1); filter: none; }
+}
+
+/* turn banner */
+.fx-banner {
+  position: fixed;
+  left: 0; right: 0; top: 50%;
+  z-index: 960;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+.fx-banner span {
+  display: block;
+  padding: 14px 64px;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, .45);
+  clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+  animation: fx-banner 1.5s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+.fx-banner.mine span { background: linear-gradient(90deg, #15803d, #22c55e, #15803d); }
+.fx-banner.theirs span { background: linear-gradient(90deg, #6d28d9, #a855f7, #6d28d9); }
+@keyframes fx-banner {
+  0%   { transform: translateX(-120vw) skewX(-12deg); }
+  22%  { transform: translateX(0) skewX(0); }
+  78%  { transform: translateX(0) skewX(0); opacity: 1; }
+  100% { transform: translateX(120vw) skewX(-12deg); opacity: 0; }
+}
+
+/* big card preview on hover */
+.fx-preview {
+  position: fixed;
+  top: 50%;
+  z-index: 970;
+  pointer-events: none;
+  transform: translateY(-50%);
+  animation: fx-preview-in .18s ease-out;
+}
+.fx-preview.right { right: 24px; }
+.fx-preview.left { left: 24px; }
+.fx-preview img {
+  height: min(62vh, 460px);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .7), 0 0 0 2px rgba(255, 255, 255, .12);
+}
+@keyframes fx-preview-in {
+  from { opacity: 0; transform: translateY(-50%) scale(.92); }
+  to { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+/* mute toggle */
+.fx-mute {
+  position: fixed;
+  right: 14px;
+  bottom: 52px;
+  z-index: 980;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(148, 163, 184, .25);
+  background: rgba(15, 23, 42, .75);
+  backdrop-filter: blur(8px);
+  font-size: 17px;
+  cursor: pointer;
+  transition: transform .15s, background .15s;
+}
+.fx-mute:hover { transform: scale(1.08); background: rgba(30, 41, 59, .9); }
+
+/* ===== Hand / board feel ===== */
+.hand-card { transition: transform .18s cubic-bezier(.2, .9, .3, 1.3), filter .18s; }
+.hand-card.playable:not(.disabled) img {
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, .75), 0 0 14px rgba(74, 222, 128, .45);
+}
+.hand-card.playable:not(.disabled):hover { transform: translateY(-14px) rotate(-2deg) scale(1.08); z-index: 5; }
+.hand-card.disabled:not(.hidden-card) img { filter: saturate(.55) brightness(.75); }
+
+.bench-hp-fill { transition: width .5s ease, background .3s; }
+
+/* HP bar: red trail that drains after the real bar */
+.hp-bar-bg { position: relative; }
+.hp-bar-trail {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 4px;
+  background: #ef4444;
+  transition: width .7s ease .45s;
+}
+.hp-bar-bg .hp-bar-fill { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-lunge, .fx-hit, .fx-hit img, .fx-shake, .fx-pop, .fx-charge img, .fx-prize { animation: none !important; }
+}
+
+/* Fanned hand: cards overlap more as the hand grows, so it never spills out of its column */
+.hand-section { max-width: 100%; }
+.hand-cards { gap: 0; }
+.hand-cards .hand-card + .hand-card { margin-left: -8px; }
+.hand-cards .hand-card:first-child:nth-last-child(n+6),
+.hand-cards .hand-card:first-child:nth-last-child(n+6) ~ .hand-card { margin-left: -26px; }
+.hand-cards .hand-card:first-child:nth-last-child(n+6) { margin-left: 0; }
+.hand-cards .hand-card:first-child:nth-last-child(n+8),
+.hand-cards .hand-card:first-child:nth-last-child(n+8) ~ .hand-card { margin-left: -40px; }
+.hand-cards .hand-card:first-child:nth-last-child(n+8) { margin-left: 0; }
+.hand-card:hover { z-index: 20; }
+/* action log: colour-code who did what */
+.log-modal-entry.log-by-ai { border-left: 3px solid #a855f7; padding-left: 8px; }
+.log-modal-entry.log-by-human { border-left: 3px solid #22c55e; padding-left: 8px; }
