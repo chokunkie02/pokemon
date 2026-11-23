@@ -1,0 +1,13 @@
+*.gguf
+__pycache__/
+.env
+.venv/
+node_modules/
+
+venv/
+.pytest_cache/
+dist/
+*.log
+api grog.txt
+frontend/api.txt
+

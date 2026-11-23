@@ -1,0 +1,673 @@
+[
+  {
+    "id": "A1_002",
+    "name": "Charizard",
+    "category": "pokemon",
+    "type": "fire",
+    "hp": 150,
+    "stage": "stage2",
+    "evolves_from": "Charmeleon",
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "fire",
+          "fire",
+          "colorless",
+          "colorless"
+        ],
+        "damage": 150,
+        "effect": "Discard 2 Fire Energy from this Pokémon.",
+        "effect_calculation": "discard_2_fire_energy_from_self"
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "water",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_003",
+    "name": "Charizard ex",
+    "category": "pokemon",
+    "type": "fire",
+    "hp": 180,
+    "stage": "stage2",
+    "evolves_from": "Charmeleon",
+    "prize_value": 2,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "fire",
+          "colorless",
+          "colorless"
+        ],
+        "damage": 60,
+        "effect": null,
+        "effect_calculation": null
+      },
+      {
+        "name": "Crimson Storm",
+        "cost": [
+          "fire",
+          "fire",
+          "colorless",
+          "colorless"
+        ],
+        "damage": 200,
+        "effect": "Discard 2 Fire Energy from this Pokémon.",
+        "effect_calculation": "discard_2_fire_energy_from_self"
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "water",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_004",
+    "name": "Charmander",
+    "category": "pokemon",
+    "type": "fire",
+    "hp": 60,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "fire"
+        ],
+        "damage": 30,
+        "effect": "Discard 1 Energy from this Pokémon.",
+        "effect_calculation": "discard_1_energy_from_self"
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "water",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_005",
+    "name": "Charmeleon",
+    "category": "pokemon",
+    "type": "fire",
+    "hp": 90,
+    "stage": "stage1",
+    "evolves_from": "Charmander",
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Fire Claws",
+        "cost": [
+          "fire",
+          "colorless",
+          "colorless"
+        ],
+        "damage": 60,
+        "effect": null,
+        "effect_calculation": null
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "water",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_006",
+    "name": "Moltres ex",
+    "category": "pokemon",
+    "type": "fire",
+    "hp": 140,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 2,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Inferno Dance",
+        "cost": [
+          "fire"
+        ],
+        "damage": 0,
+        "effect": "Flip 3 coins. Take an amount of Fire Energy from your Energy Zone equal to the number of heads and attach it to your Benched Fire Pokémon in any way you like.",
+        "effect_calculation": "coin_flip_3_attach_fire_energy_from_zone"
+      },
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "fire",
+          "fire",
+          "colorless"
+        ],
+        "damage": 70,
+        "effect": null,
+        "effect_calculation": null
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "water",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "T01_001",
+    "name": "Giovanni",
+    "category": "supporter",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "During this turn, attacks used by your Pokémon do +10 damage to your opponent's Active Pokémon.",
+    "trainer_effect_calculation": "attack_damage_boost_10_this_turn"
+  },
+  {
+    "id": "T01_002",
+    "name": "Poké Ball",
+    "category": "item",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "Put 1 random Basic Pokémon from your deck into your hand.",
+    "trainer_effect_calculation": "search_random_basic_pokemon_to_hand"
+  },
+  {
+    "id": "T01_003",
+    "name": "Potion",
+    "category": "item",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "Heal 20 damage from 1 of your Pokémon.",
+    "trainer_effect_calculation": "heal_20_from_target"
+  },
+  {
+    "id": "T01_004",
+    "name": "Professor's Research",
+    "category": "supporter",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "Draw 2 cards.",
+    "trainer_effect_calculation": "draw_2_cards"
+  },
+  {
+    "id": "T01_005",
+    "name": "Red Card",
+    "category": "item",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "Your opponent shuffles their hand into their deck and draws 3 cards.",
+    "trainer_effect_calculation": "opponent_shuffle_hand_draw_3"
+  },
+  {
+    "id": "T01_006",
+    "name": "Sabrina",
+    "category": "supporter",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)",
+    "trainer_effect_calculation": "opponent_switch_active_to_bench"
+  },
+  {
+    "id": "T01_007",
+    "name": "X Speed",
+    "category": "item",
+    "type": null,
+    "hp": null,
+    "stage": null,
+    "evolves_from": null,
+    "prize_value": null,
+    "ability": null,
+    "attacks": [],
+    "retreat_cost": [],
+    "weakness": null,
+    "resistance": null,
+    "trainer_effect": "During this turn, the Retreat Cost of your Active Pokémon is 1 less.",
+    "trainer_effect_calculation": "retreat_cost_reduce_1_this_turn"
+  },
+  {
+    "id": "A1_007",
+    "name": "Gardevoir",
+    "category": "pokemon",
+    "type": "psychic",
+    "hp": 110,
+    "stage": "stage2",
+    "evolves_from": "Kirlia",
+    "prize_value": 1,
+    "ability": {
+      "name": "Psy Shadow",
+      "effect": "Once during your turn, you may take a Psychic Energy from your Energy Zone and attach it to the Active Pokémon.",
+      "is_optional": true,
+      "once_per_turn": true
+    },
+    "attacks": [
+      {
+        "name": "Psyshot",
+        "cost": [
+          "psychic",
+          "colorless",
+          "psychic"
+        ],
+        "damage": 60,
+        "effect": null,
+        "effect_calculation": null
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "darkness",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_008",
+    "name": "Kirlia",
+    "category": "pokemon",
+    "type": "psychic",
+    "hp": 80,
+    "stage": "stage1",
+    "evolves_from": "Ralts",
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Smack",
+        "cost": [
+          "psychic",
+          "colorless"
+        ],
+        "damage": 30,
+        "effect": null,
+        "effect_calculation": null
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "darkness",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_009",
+    "name": "Mewtwo",
+    "category": "pokemon",
+    "type": "psychic",
+    "hp": 120,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Power Blast",
+        "cost": [
+          "psychic",
+          "colorless",
+          "colorless"
+        ],
+        "damage": 120,
+        "effect": "Discard 2 Energy from this Pokémon.",
+        "effect_calculation": "discard_2_energy_from_self"
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "darkness",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_010",
+    "name": "Mewtwo ex",
+    "category": "pokemon",
+    "type": "psychic",
+    "hp": 150,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 2,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Psychic Sphere",
+        "cost": [
+          "psychic",
+          "colorless"
+        ],
+        "damage": 50,
+        "effect": null,
+        "effect_calculation": null
+      },
+      {
+        "name": "Psydrive",
+        "cost": [
+          "psychic",
+          "psychic",
+          "colorless",
+          "colorless"
+        ],
+        "damage": 150,
+        "effect": "Discard 2 Psychic Energy from this Pokémon.",
+        "effect_calculation": "discard_2_psychic_energy_from_self"
+      }
+    ],
+    "retreat_cost": [
+      "colorless",
+      "colorless"
+    ],
+    "weakness": {
+      "type": "darkness",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_011",
+    "name": "Ralts",
+    "category": "pokemon",
+    "type": "psychic",
+    "hp": 60,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "psychic"
+        ],
+        "damage": 10,
+        "effect": null,
+        "effect_calculation": null
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "darkness",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_012",
+    "name": "Blitzle",
+    "category": "pokemon",
+    "type": "lightning",
+    "hp": 60,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Zap Kick",
+        "cost": [
+          "lightning"
+        ],
+        "damage": 20,
+        "effect": null,
+        "effect_calculation": null
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "fighting",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_013",
+    "name": "Pikachu ex",
+    "category": "pokemon",
+    "type": "lightning",
+    "hp": 120,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 2,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Circle Circuit",
+        "cost": [
+          "lightning",
+          "lightning"
+        ],
+        "damage": 30,
+        "effect": "This attack does 30 damage for each of your Benched Pokémon.",
+        "effect_calculation": "damage_multiplied_by_benched_count"
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "fighting",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_014",
+    "name": "Zapdos",
+    "category": "pokemon",
+    "type": "lightning",
+    "hp": 100,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Raging Thunder",
+        "cost": [
+          "lightning",
+          "lightning",
+          "colorless"
+        ],
+        "damage": 100,
+        "effect": "This attack also does 30 damage to 1 of your Benched Pokémon.",
+        "effect_calculation": "damage_self_bench_30"
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "fighting",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_015",
+    "name": "Zapdos ex",
+    "category": "pokemon",
+    "type": "lightning",
+    "hp": 130,
+    "stage": "basic",
+    "evolves_from": null,
+    "prize_value": 2,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "lightning"
+        ],
+        "damage": 20,
+        "effect": null,
+        "effect_calculation": null
+      },
+      {
+        "name": "Thundering Hurricane",
+        "cost": [
+          "lightning",
+          "lightning",
+          "lightning"
+        ],
+        "damage": 50,
+        "effect": "Flip 4 coins. This attack does 50 damage for each heads.",
+        "effect_calculation": "damage_multiplied_by_heads_50"
+      }
+    ],
+    "retreat_cost": [
+      "colorless"
+    ],
+    "weakness": {
+      "type": "fighting",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  },
+  {
+    "id": "A1_016",
+    "name": "Zebstrika",
+    "category": "pokemon",
+    "type": "lightning",
+    "hp": 90,
+    "stage": "stage1",
+    "evolves_from": "Blitzle",
+    "prize_value": 1,
+    "ability": null,
+    "attacks": [
+      {
+        "name": "Thunder Spear",
+        "cost": [
+          "lightning"
+        ],
+        "damage": 0,
+        "effect": "This attack does 30 damage to 1 of your opponent's Pokémon.",
+        "effect_calculation": "damage_to_opponent_pokemon_30"
+      }
+    ],
+    "retreat_cost": [],
+    "weakness": {
+      "type": "fighting",
+      "multiplier": 20
+    },
+    "resistance": null,
+    "trainer_effect": null,
+    "trainer_effect_calculation": null
+  }
+]
