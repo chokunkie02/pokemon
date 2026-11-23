@@ -6,6 +6,7 @@ import random
 import re
 import builtins
 import math
+import threading
 from typing import Dict, Any, List
 from dotenv import load_dotenv
 
@@ -1702,7 +1703,31 @@ def _describe_action(endpoint: str, payload: dict) -> str:
     return endpoint
 
 
+_ai_run_lock = threading.Lock()
+_ai_rerun = threading.Event()
+
+
 def execute_ai_turn(game_instance):
+    """Run the AI loop, but never two at once.
+
+    Every API request may queue this as a background task. Two loops racing on the
+    same game made one of them force-end the human's turn. If a loop is already
+    running, ask it to re-check once it finishes instead of starting another.
+    """
+    while True:
+        if not _ai_run_lock.acquire(blocking=False):
+            _ai_rerun.set()
+            return
+        try:
+            _ai_rerun.clear()
+            _execute_ai_turn_loop(game_instance)
+        finally:
+            _ai_run_lock.release()
+        if not _ai_rerun.is_set():
+            return
+
+
+def _execute_ai_turn_loop(game_instance):
     """
     Called by the backend when it's Goopy AI's turn or when it has a mandatory action.
     Loops continuously until the turn is truly over (end_turn called, game over, or
@@ -1836,7 +1861,7 @@ def execute_ai_turn(game_instance):
                 consecutive_failures += 1
                 if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
                     print("[Goopy AI] Consecutive failure cap reached (LLM errors). Forcing end turn.")
-                    if is_my_turn_main and not game_instance.game_over:
+                    if is_my_turn_main and game_instance.current_turn == ai_name and not game_instance.game_over:
                         game_instance.action_end_turn()
                     break
                 continue
@@ -1863,7 +1888,7 @@ def execute_ai_turn(game_instance):
                 consecutive_failures += 1
                 if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
                     print("[Goopy AI] Consecutive failure cap reached (hallucinated endpoints). Forcing end turn.")
-                    if is_my_turn_main and not game_instance.game_over:
+                    if is_my_turn_main and game_instance.current_turn == ai_name and not game_instance.game_over:
                         game_instance.action_end_turn()
                     break
 
@@ -1946,7 +1971,7 @@ def execute_ai_turn(game_instance):
             print(f"[Goopy AI] Action failed ({consecutive_failures}/{MAX_CONSECUTIVE_FAILURES}).")
             if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
                 print("[Goopy AI] Consecutive failure cap reached. Forcing end turn.")
-                if is_my_turn_main and not game_instance.game_over:
+                if is_my_turn_main and game_instance.current_turn == ai_name and not game_instance.game_over:
                     game_instance.action_end_turn()
                 break
 
