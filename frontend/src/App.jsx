@@ -77,7 +77,6 @@ function App() {
       {showExitConfirm && (
         <div className="exit-confirm-overlay" onClick={handleCancelExit}>
           <div className="exit-confirm-box" onClick={e => e.stopPropagation()}>
-            <div className="exit-confirm-icon">⚠️</div>
             <h2 className="exit-confirm-title">ออกจากเกม?</h2>
             <p className="exit-confirm-msg">
               เกมที่กำลังเล่นอยู่จะถูกลบทิ้ง<br />

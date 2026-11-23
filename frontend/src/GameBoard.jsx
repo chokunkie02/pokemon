@@ -3,11 +3,6 @@ import GameFx from './fx/GameFx';
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
-const ENERGY_SYMBOLS = {
-  fire: '🔥', water: '💧', psychic: '🔮', lightning: '⚡',
-  fighting: '👊', grass: '🌿', darkness: '🌙', colorless: '⚪',
-};
-
 const DECK_TYPE_LABELS = {
   fire: 'ไฟ',
   lightning: 'สายฟ้า',
@@ -409,20 +404,20 @@ export default function GameBoard({ isTrueBattle, onBack }) {
 
     if (detail.category === 'pokemon' && detail.stage === 'basic') {
       if (mustSelectActive || (!setup_phase && isMyTurn && !player.active_pokemon)) {
-        actions.push({ label: '⚔️ ลง Active', action: 'play_active' });
+        actions.push({ label: 'ลง Active', action: 'play_active' });
       }
       if (!setup_phase && isMyTurn && player.active_pokemon && player.bench.length < 3) {
-        actions.push({ label: '🪑 ลงเบนช์', action: 'play_bench' });
+        actions.push({ label: 'ลงเบนช์', action: 'play_bench' });
       }
     }
 
     if (detail.category === 'pokemon' && detail.stage !== 'basic' && !setup_phase && isMyTurn) {
       // สามารถ evolve ได้
-      actions.push({ label: '✨ วิวัฒนาการ', action: 'evolve' });
+      actions.push({ label: 'วิวัฒนาการ', action: 'evolve' });
     }
 
     if ((detail.category === 'item' || detail.category === 'supporter') && !setup_phase && isMyTurn) {
-      actions.push({ label: '🃏 ใช้การ์ด Trainer', action: 'use_trainer' });
+      actions.push({ label: 'ใช้การ์ด Trainer', action: 'use_trainer' });
     }
 
     return actions;
@@ -434,16 +429,16 @@ export default function GameBoard({ isTrueBattle, onBack }) {
     const detail = player.hand_details?.find(c => c.id === cardId);
     switch (action) {
       case 'play_active':
-        showCardPopup(cardId, detail?.name || cardId, 'ลง Active ⚔️', player.name);
+        showCardPopup(cardId, detail?.name || cardId, 'ลง Active', player.name);
         await doAction('/api/action/play_active', { player_name: player.name, card_id: cardId });
         break;
       case 'play_bench':
-        showCardPopup(cardId, detail?.name || cardId, 'ลง Bench 🪑', player.name);
+        showCardPopup(cardId, detail?.name || cardId, 'ลง Bench', player.name);
         await doAction('/api/action/play_bench', { player_name: player.name, card_id: cardId });
         break;
       case 'evolve': {
         // เช็คว่า evolve ได้ที่ไหนบ้าง
-        showCardPopup(cardId, detail?.name || cardId, 'วิวัฒนาการ ✨', player.name);
+        showCardPopup(cardId, detail?.name || cardId, 'วิวัฒนาการ', player.name);
         const targets = [];
         if (player.active_pokemon && player.active_pokemon.name === detail?.evolves_from) {
           targets.push({ position: 'active', index: 0, pokemon: player.active_pokemon });
@@ -472,7 +467,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
         break;
       }
       case 'use_trainer':
-        showCardPopup(cardId, detail?.name || cardId, 'ใช้ Trainer 🃏', player.name);
+        showCardPopup(cardId, detail?.name || cardId, 'ใช้ Trainer', player.name);
         if (detail?.trainer_effect_calculation === 'heal_20_from_target') {
           const targets = getPokemonTargets(player, { damagedOnly: true });
 
@@ -865,11 +860,11 @@ export default function GameBoard({ isTrueBattle, onBack }) {
             <span className="energy-zone-label">Energy Zone</span>
           </div>
           <div className="deck-count">
-            🃏 Deck: <strong>{player.deck_count}</strong>
+            Deck: <strong>{player.deck_count}</strong>
           </div>
           {canInteract && !setup_phase && player.energy_zone > 0 && (
             <button className="utility-btn" onClick={() => setShowEnergyModal(true)}>
-              <span className="icon">⚡</span> ติดพลังงาน
+              ติดพลังงาน
             </button>
           )}
         </div>
@@ -937,7 +932,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
                           handleBenchAbility(player.name, idx);
                         }}
                       >
-                        ⭐ {ability.name}
+                        {ability.name}
                       </button>
                     );
                   })()}
@@ -1062,7 +1057,6 @@ export default function GameBoard({ isTrueBattle, onBack }) {
               onClick={handleAbility}
               title={ability.effect}
             >
-              <span className="icon">⭐</span>
               {ability.name}
               {!ability.can_use && ' (ใช้แล้ว)'}
             </button>
@@ -1081,7 +1075,6 @@ export default function GameBoard({ isTrueBattle, onBack }) {
                 }
               }}
             >
-              <span className="icon">🔄</span>
               ถอย {currentPlayer.retreated_this_turn ? '(ใช้แล้ว)' : ''}
             </button>
           )}
@@ -1117,11 +1110,11 @@ export default function GameBoard({ isTrueBattle, onBack }) {
                   color: 'var(--accent-psychic)', fontSize: 13, fontWeight: 600,
                   animation: 'pulse 1.5s ease-in-out infinite'
                 }}>
-                  <span>🧠</span> Goopy AI กำลังคิด...
+                  Goopy AI กำลังคิด...
                 </div>
               ) : (
                 <>
-                  <button className="btn-concede" onClick={handleConcede}>🏳️ ยอมแพ้</button>
+                  <button className="btn-concede" onClick={handleConcede}>ยอมแพ้</button>
                   <button
                     className="btn-end-turn"
                     disabled={game_over || promotingPlayer !== null}
@@ -1238,7 +1231,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
         {action_log.length > 0 && (
           <>
             <button className="log-history-btn" onClick={() => setShowLogModal(true)}>
-              📋 ประวัติการเล่น
+              ประวัติการเล่น
               <span className="log-history-count">{action_log.length}</span>
             </button>
             <span className="log-latest-entry">
@@ -1253,7 +1246,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
       {showLogModal && (
         <div className="modal-overlay" onClick={() => setShowLogModal(false)}>
           <div className="log-modal-box" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">📋 ประวัติการเล่น</div>
+            <div className="modal-title">ประวัติการเล่น</div>
             <div className="log-modal-entries" ref={logModalRef}>
               {action_log.map((entry, i) => (
                 <div key={i} className={`log-modal-entry ${/Goopy AI/.test(entry.message) ? 'log-by-ai' : 'log-by-human'} ${i === action_log.length - 1 ? 'log-modal-entry-latest' : ''}`}>
@@ -1275,7 +1268,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
         return (
           <div className="modal-overlay" onClick={() => setShowRetreatModal(false)}>
             <div className="modal-box" onClick={e => e.stopPropagation()}>
-              <div className="modal-title">🔄 เลือก Pokemon สลับขึ้น Active</div>
+              <div className="modal-title">เลือก Pokemon สลับขึ้น Active</div>
               <div className="modal-subtitle">เลือก Pokemon จาก Bench ที่จะขึ้นมาแทน</div>
               {cp.bench.map((bp, idx) => (
                 <div key={idx} className="retreat-option" onClick={() => handleRetreat(idx)}>
@@ -1300,7 +1293,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
         return (
           <div className="modal-overlay" onClick={() => setShowEnergyModal(false)}>
             <div className="modal-box" onClick={e => e.stopPropagation()}>
-              <div className="modal-title">⚡ ติดพลังงานให้ใคร?</div>
+              <div className="modal-title">ติดพลังงานให้ใคร?</div>
               <div className="modal-subtitle">เลือก Pokemon ที่จะรับพลังงาน {cp.energy_type}</div>
               {targets.map((t, i) => (
                 <div key={i} className="attach-energy-option" onClick={() => handleAttachEnergy(t.pos, t.idx)}>
@@ -1320,7 +1313,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
       {showEvolveTarget && (
         <div className="modal-overlay" onClick={() => setShowEvolveTarget(null)}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">✨ เลือกเป้าหมายวิวัฒนาการ</div>
+            <div className="modal-title">เลือกเป้าหมายวิวัฒนาการ</div>
             <div className="modal-subtitle">จะวิวัฒนาการ Pokemon ตัวไหน?</div>
             <div className="modal-cards">
               {showEvolveTarget.targets.map((t, i) => (
@@ -1446,7 +1439,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
       {promotingPlayer && promotingPlayer.name !== 'Goopy AI' && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <div className="modal-title">⚔️ เลือก Pokemon ขึ้น Active!</div>
+            <div className="modal-title">เลือก Pokemon ขึ้น Active!</div>
             <div className="modal-subtitle">{promotingPlayer.name}: Active ถูก KO แล้ว เลือก Pokemon จาก Bench</div>
             <div className="modal-cards">
               {promotingPlayer.bench.map((bp, idx) => (
@@ -1467,7 +1460,6 @@ export default function GameBoard({ isTrueBattle, onBack }) {
       {promotingPlayer && promotingPlayer.name === 'Goopy AI' && (
         <div className="modal-overlay">
           <div className="modal-box" style={{ textAlign: 'center', padding: '30px 40px' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>🧠</div>
             <div className="modal-title">Goopy AI กำลังเลือก Pokemon...</div>
             <div className="modal-subtitle" style={{ color: 'var(--accent-psychic)' }}>กรุณารอ AI เลือก Pokemon ขึ้น Active</div>
           </div>
@@ -1479,12 +1471,12 @@ export default function GameBoard({ isTrueBattle, onBack }) {
         <div className="game-over-overlay">
           <div className="game-over-box">
             <div className="game-over-title">GAME OVER</div>
-            <div className="game-over-winner">🏆 {winner} เป็นผู้ชนะ!</div>
+            <div className="game-over-winner">{winner} เป็นผู้ชนะ!</div>
             <button className="btn-new-game" onClick={async () => {
               setGameState(null);
               setShowStartSetup(true);
             }}>
-              🔄 เริ่มเกมใหม่
+              เริ่มเกมใหม่
             </button>
           </div>
         </div>

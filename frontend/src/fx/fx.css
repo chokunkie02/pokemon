@@ -196,3 +196,4 @@
 /* action log: colour-code who did what */
 .log-modal-entry.log-by-ai { border-left: 3px solid #a855f7; padding-left: 8px; }
 .log-modal-entry.log-by-human { border-left: 3px solid #22c55e; padding-left: 8px; }
+.fx-mute { display: grid; place-items: center; color: #e2e8f0; }
