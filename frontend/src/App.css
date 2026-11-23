@@ -2139,3 +2139,76 @@ body {
   filter: drop-shadow(0 0 6px rgba(251,191,36,0.5));
 }
 
+
+
+/* ==========================================
+   Visual polish (2026-11)
+   ========================================== */
+
+/* Same stadium backdrop as the title screen, dimmed so cards stay readable */
+.game-container,
+.loading-screen {
+  background:
+    linear-gradient(180deg, rgba(6, 10, 22, 0.90) 0%, rgba(8, 13, 28, 0.84) 50%, rgba(6, 10, 22, 0.92) 100%),
+    url('/picture/bgpokemon.jpg') center 30% / cover no-repeat fixed;
+}
+
+/* Glass panels for both fields */
+.player-field {
+  border-radius: 14px;
+  padding: 6px 12px;
+  border-width: 1px;
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.player-field.opponent { background: linear-gradient(180deg, rgba(127, 29, 29, 0.16), rgba(17, 24, 39, 0.55)); }
+.player-field.player   { background: linear-gradient(0deg,   rgba(30, 58, 138, 0.20), rgba(17, 24, 39, 0.55)); }
+.player-field.is-turn {
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.35), 0 0 32px rgba(34, 197, 94, 0.16), 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Put both Active Pokemon in the centre column so they face each other across the VS line */
+.field-content > .bench-zone          { order: 1; }
+.field-content > .active-zone         { order: 2; }
+.field-content > .internal-hand-zone,
+.field-content > .hand-section        { order: 3; }
+
+/* Empty slots: softer, glassy placeholders */
+.empty-slot,
+.empty-bench-slot {
+  border: 2px dashed rgba(148, 163, 184, 0.28);
+  background: rgba(15, 23, 42, 0.35);
+  color: rgba(148, 163, 184, 0.55);
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.empty-slot:hover,
+.empty-bench-slot:hover {
+  border-color: rgba(96, 165, 250, 0.55);
+  background: rgba(30, 58, 138, 0.18);
+}
+
+/* Top bar blends into the backdrop */
+.top-bar {
+  background: rgba(8, 12, 24, 0.72);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+/* Deck picker: glass card, and fade the art so its own text doesn't clash with the labels */
+.start-setup-card {
+  background: rgba(15, 21, 36, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 20px;
+}
+.deck-bg-fire      { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/charizard.png') right 30% / 60% auto no-repeat, #1b2235; }
+.deck-bg-psychic   { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/mewto.png')     right 30% / 60% auto no-repeat, #1b2235; }
+.deck-bg-lightning { background: linear-gradient(90deg, #1b2235 0%, #1b2235 58%, rgba(27, 34, 53, 0.2) 100%), url('/picture/pikachu.png')   right 30% / 60% auto no-repeat, #1b2235; }
+.deck-choice-btn { border-radius: 12px; }
+/* equal side columns keep Active exactly centred */
+.field-content > .bench-zone,
+.field-content > .internal-hand-zone,
+.field-content > .hand-section { flex: 1 1 0; min-width: 0; }

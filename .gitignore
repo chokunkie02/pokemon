@@ -11,3 +11,4 @@ dist/
 api grog.txt
 frontend/api.txt
 
+.claude/
