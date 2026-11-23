@@ -920,6 +920,7 @@ export default function SelfPlayBoard({ onBack }) {
             return (
               <div
                 key={`${cardId}-${idx}`}
+                style={{ '--i': idx, '--n': player.hand.length }}
                 className={`hand-card ${actions.length ? 'playable' : ''} ${highlightBasic ? 'highlight-basic' : ''} ${!canInteract ? 'disabled' : ''} ${isSelected ? 'active-selection' : ''}`}
                 onClick={(e) => {
                   e.stopPropagation();

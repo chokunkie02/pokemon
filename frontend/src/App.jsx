@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import './App.css'
 import GameBoard from './GameBoard'
 import SelfPlayBoard from './SelfPlayBoard'
+import './theme/playmat.css'
 
 const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 

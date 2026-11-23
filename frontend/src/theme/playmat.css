@@ -1,0 +1,357 @@
+/* =====================================================================
+   Playmat theme — makes the board read like a physical card-game mat.
+   Loaded last (from App.jsx) so it layers over App.css / fx.css.
+   Only presentation: no game logic depends on anything here.
+   ===================================================================== */
+
+:root {
+  --mat-felt-1: #10243b;
+  --mat-felt-2: #0a1828;
+  --mat-line: rgba(186, 230, 253, 0.14);
+  --mat-imprint: rgba(186, 230, 253, 0.10);
+  --gold-1: #fde68a;
+  --gold-2: #f59e0b;
+  --gold-3: #b45309;
+  --display: 'Kanit', 'Inter', system-ui, sans-serif;
+}
+
+.game-container { font-family: var(--display); }
+
+/* ---------- Top bar: slim HUD ---------- */
+.game-container .top-bar {
+  padding: 6px 18px;
+  background: linear-gradient(180deg, rgba(3, 7, 18, 0.92), rgba(3, 7, 18, 0.6));
+  border-bottom: 1px solid rgba(253, 230, 138, 0.12);
+  backdrop-filter: none;           /* keeps the fixed End Turn button tied to the viewport */
+  -webkit-backdrop-filter: none;
+}
+.game-container .top-bar-logo h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: .5px;
+}
+.game-container .turn-number { font-family: var(--display); }
+
+/* ---------- The mat ---------- */
+.game-container .board {
+  margin: 8px auto;
+  width: calc(100% - 24px);
+  border-radius: 22px;
+  padding: 10px 18px;
+  gap: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(56, 189, 248, 0.10), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #1a1030 0%, var(--mat-felt-1) 22%, var(--mat-felt-2) 50%, var(--mat-felt-1) 78%, #0c2233 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(253, 230, 138, 0.10),
+    inset 0 0 0 10px rgba(0, 0, 0, 0.18),
+    inset 0 0 60px rgba(0, 0, 0, 0.55),
+    0 18px 50px rgba(0, 0, 0, 0.55);
+}
+
+/* the two halves sit on the mat instead of floating panels */
+.game-container .player-field,
+.game-container .player-field.opponent,
+.game-container .player-field.player {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 16px;
+  padding: 4px 8px;
+  position: relative;
+  overflow: visible;
+  transition: background .4s;
+}
+/* whose turn: a soft light pooling under that half */
+.game-container .player-field.is-turn.player {
+  background: radial-gradient(ellipse 70% 90% at 50% 100%, rgba(74, 222, 128, 0.10), transparent 70%);
+}
+.game-container .player-field.is-turn.opponent {
+  background: radial-gradient(ellipse 70% 90% at 50% 0%, rgba(192, 132, 252, 0.12), transparent 70%);
+}
+
+/* centre line + emblem */
+.game-container .vs-divider { padding: 2px 0; gap: 0; }
+.game-container .vs-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--mat-line) 15%, var(--mat-line) 85%, transparent);
+}
+.game-container .vs-badge {
+  width: 52px;
+  height: 52px;
+  font-family: var(--display);
+  font-size: 15px;
+  font-style: normal;
+  border: 2px solid rgba(253, 230, 138, 0.45);
+  background-color: rgba(10, 24, 40, 0.9);
+  box-shadow: 0 0 0 6px rgba(10, 24, 40, 0.9), 0 0 0 7px var(--mat-line), 0 0 24px rgba(251, 191, 36, 0.25);
+}
+
+/* ---------- Zones printed on the mat ---------- */
+.game-container .empty-slot,
+.game-container .empty-bench-slot {
+  border: 2px solid var(--mat-imprint);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.12)),
+    rgba(2, 6, 23, 0.25);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  color: rgba(186, 230, 253, 0.28);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.game-container .empty-slot { height: 13vh; width: calc(13vh * 0.714); }
+.game-container .empty-bench-slot { height: 9.5vh; width: calc(9.5vh * 0.714); font-size: 22px; }
+
+.game-container .active-zone-label,
+.game-container .bench-zone-label,
+.game-container .hand-label {
+  font-family: var(--display);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: rgba(186, 230, 253, 0.45);
+}
+
+/* ---------- Cards on the mat: bigger, real card shadows ---------- */
+.game-container .active-card {
+  height: 13vh;
+  border: none;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.85),
+    0 0 0 4px rgba(0, 0, 0, 0.35),
+    0 14px 26px rgba(0, 0, 0, 0.55);
+}
+.game-container .bench-card-img {
+  height: 9.5vh;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+.game-container .active-card-wrapper,
+.game-container .bench-card-slot { transition: transform .2s; }
+.game-container .bench-card-slot:hover { transform: translateY(-4px); }
+.game-container .bench-card-slot.clickable .bench-card-img {
+  box-shadow: 0 0 0 3px var(--gold-1), 0 0 18px rgba(251, 191, 36, 0.6), 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+
+/* name plate + HP under the Active */
+.game-container .pokemon-info-bar .pokemon-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  text-shadow: 0 1px 2px #000;
+}
+.game-container .hp-bar-bg {
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.game-container .hp-bar-fill,
+.game-container .hp-bar-trail { border-radius: 99px; }
+
+/* ---------- Hand: a real fan ---------- */
+.game-container .hand-section {
+  background: none;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 4px 8px 0;
+}
+.game-container .hand-cards { padding-top: 4px; min-height: 0; }
+.game-container .hand-card {
+  --off: calc(var(--i, 0) - (var(--n, 1) - 1) / 2);
+  transform-origin: 50% 120%;
+  transform: rotate(calc(var(--off) * 4deg)) translateY(calc(var(--off) * var(--off) * 1.6px));
+}
+.game-container .player-field.opponent .hand-card {
+  transform-origin: 50% -20%;
+  transform: rotate(calc(var(--off) * -3deg)) translateY(calc(var(--off) * var(--off) * -1.2px));
+}
+.game-container .hand-card img {
+  height: 10.5vh;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.75), -6px 6px 14px rgba(0, 0, 0, 0.55);
+}
+.game-container .hand-card.playable:not(.disabled) img {
+  box-shadow: 0 0 0 2px #4ade80, 0 0 16px rgba(74, 222, 128, 0.55), -6px 6px 14px rgba(0, 0, 0, 0.55);
+}
+.game-container .hand-card:not(.disabled):hover,
+.game-container .hand-card.active-selection {
+  transform: translateY(-22px) rotate(0deg) scale(1.15);
+  z-index: 30;
+}
+.game-container .hand-card:not(.disabled):hover img { box-shadow: 0 0 0 2px var(--gold-1), 0 18px 30px rgba(0, 0, 0, 0.6); }
+.game-container .hand-card.disabled:not(.hidden-card) img { filter: saturate(.6) brightness(.8); }
+.game-container .hand-card.hidden-card img { filter: none; }
+
+/* ---------- Deck pile & prizes as card stacks ---------- */
+.game-container .deck-count {
+  position: relative;
+  width: 34px;
+  height: 47px;
+  padding: 0;
+  font-size: 0;
+  border: none;
+  border-radius: 4px;
+  background: url('/picture/A1_001.png') center / cover;
+  box-shadow: 1px 1px 0 #1e293b, 2px 2px 0 #334155, 3px 3px 0 #1e293b, 4px 4px 8px rgba(0, 0, 0, .6);
+}
+.game-container .deck-count strong {
+  position: absolute;
+  right: -10px;
+  bottom: -8px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 99px;
+  font-size: 11px;
+  line-height: 22px;
+  text-align: center;
+  color: #111827;
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .5);
+}
+.game-container .prize-card {
+  width: 22px;
+  height: 31px;
+  border: none;
+  border-radius: 3px;
+  background: url('/picture/A1_001.png') center / cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 3px 6px rgba(0, 0, 0, .5);
+}
+.game-container .prize-card.taken {
+  opacity: 1;
+  transform: none;
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 0 0 1px var(--gold-3), 0 0 12px rgba(251, 191, 36, .7);
+}
+.game-container .prize-card-inner { display: none; }
+
+/* ---------- End turn: the big round button on the mat's edge ---------- */
+.game-container .btn-end-turn {
+  position: fixed;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  border-radius: 50%;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #1f1300;
+  background: radial-gradient(circle at 35% 30%, #fff7cc, var(--gold-1) 30%, var(--gold-2) 70%, var(--gold-3));
+  border: 3px solid rgba(255, 255, 255, .55);
+  box-shadow: 0 0 0 5px rgba(10, 24, 40, .85), 0 0 0 6px rgba(253, 230, 138, .35), 0 10px 28px rgba(0, 0, 0, .6);
+  animation: endturn-breathe 2.4s ease-in-out infinite;
+}
+.game-container .btn-end-turn:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.07);
+  box-shadow: 0 0 0 5px rgba(10, 24, 40, .85), 0 0 0 6px var(--gold-1), 0 0 30px rgba(251, 191, 36, .55);
+}
+.game-container .btn-end-turn:disabled {
+  animation: none;
+  color: #6b7280;
+  background: radial-gradient(circle at 35% 30%, #4b5563, #1f2937);
+  border-color: rgba(255, 255, 255, .1);
+  transform: translateY(-50%);
+}
+@keyframes endturn-breathe {
+  0%, 100% { box-shadow: 0 0 0 5px rgba(10, 24, 40, .85), 0 0 0 6px rgba(253, 230, 138, .35), 0 10px 28px rgba(0, 0, 0, .6); }
+  50% { box-shadow: 0 0 0 5px rgba(10, 24, 40, .85), 0 0 0 6px rgba(253, 230, 138, .8), 0 0 26px rgba(251, 191, 36, .45); }
+}
+.game-container .btn-concede { font-family: var(--display); }
+
+/* ---------- Attack plates ---------- */
+.game-container .action-panel {
+  background: linear-gradient(0deg, rgba(3, 7, 18, .95), rgba(3, 7, 18, .7));
+  border-top: 1px solid rgba(253, 230, 138, .12);
+  padding: 6px 12px;
+}
+.game-container .action-panel-grid { flex-direction: row; max-width: 980px; gap: 10px; }
+.game-container .attack-btn {
+  position: relative;
+  min-width: 220px;
+  max-width: 420px;
+  padding: 8px 76px 8px 14px;
+  border: 1.5px solid rgba(253, 230, 138, .25);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1f2a44, #121a2e);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 4px 12px rgba(0, 0, 0, .4);
+  font-family: var(--display);
+}
+.game-container .attack-btn:hover:not(:disabled) {
+  border-color: var(--gold-1);
+  background: linear-gradient(180deg, #2a3758, #18223a);
+  box-shadow: 0 0 0 1px var(--gold-1), 0 0 22px rgba(251, 191, 36, .25), 0 8px 18px rgba(0, 0, 0, .5);
+  transform: translateY(-3px);
+}
+.game-container .attack-btn:disabled { opacity: .45; filter: grayscale(.6); }
+.game-container .attack-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.game-container .attack-info { display: contents; }
+.game-container .attack-damage {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .5), 0 0 14px rgba(248, 113, 113, .6);
+}
+.game-container .attack-effect { font-size: 11px; color: #94a3b8; margin-top: 3px; line-height: 1.35; }
+.game-container .utility-btn { font-family: var(--display); }
+
+/* ---------- Bottom log strip ---------- */
+.game-container .log-bar {
+  background: rgba(3, 7, 18, .9);
+  border-top: 1px solid rgba(253, 230, 138, .08);
+  font-size: 12px;
+}
+
+/* ---------- Title menu: modes as tall cards with foil shine ---------- */
+.mode-selection-screen .main-title { font-family: var(--display); letter-spacing: 1px; }
+.mode-selection-screen .menu-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .14), inset 0 0 0 8px rgba(0, 0, 0, .18), 0 18px 40px rgba(0, 0, 0, .5);
+  font-family: var(--display);
+}
+.mode-selection-screen .menu-card::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, .22) 50%, transparent 60%);
+  transform: translateX(-60%);
+  transition: transform .7s ease;
+  pointer-events: none;
+}
+.mode-selection-screen .menu-card:hover::after { transform: translateX(60%); }
+.mode-selection-screen .menu-card:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* deck picker */
+.start-setup-card, .start-setup-title { font-family: var(--display); }
+
+@media (prefers-reduced-motion: reduce) {
+  .game-container .btn-end-turn { animation: none; }
+}
+
+/* tighten vertical rhythm so both halves fit a 768px-tall laptop screen */
+.game-container .field-header { margin-bottom: 0; }
+.game-container .energy-stats-row { margin: 0; padding: 0; }
+.game-container .board { overflow: visible; }
+.game-container .field-content { overflow: visible; }

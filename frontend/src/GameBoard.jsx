@@ -984,6 +984,7 @@ export default function GameBoard({ isTrueBattle, onBack }) {
             return (
               <div
                 key={`${cardId}-${idx}`}
+                style={{ '--i': idx, '--n': player.hand.length }}
                 className={`hand-card ${actions.length ? 'playable' : ''} ${highlightBasic ? 'highlight-basic' : ''} ${!canInteract ? 'disabled' : ''} ${isSelected ? 'active-selection' : ''} ${isGoopyAI && isTrueBattle ? 'hidden-card' : ''}`}
                 onClick={(e) => {
                   e.stopPropagation();
