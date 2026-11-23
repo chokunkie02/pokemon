@@ -2,8 +2,8 @@ import json
 from collections import Counter
 import shutil
 
-INPUT_FILE = "training_data.jsonl"
-OUTPUT_FILE = "training_data_clean.jsonl"
+INPUT_FILE = "data/training_data.jsonl"
+OUTPUT_FILE = "data/training_data_clean.jsonl"
 
 entries = []
 for line in open(INPUT_FILE, encoding='utf-8'):

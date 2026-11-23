@@ -6,28 +6,10 @@ import random
 import re
 import builtins
 import math
-import urllib.request
-import urllib.error
 from typing import Dict, Any, List
-from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
-LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "ollama").lower()
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434/api/generate")
-OLLAMA_TIMEOUT_SECONDS = float(os.environ.get("OLLAMA_TIMEOUT_SECONDS", "180"))
-OLLAMA_NUM_GPU = int(os.environ.get("OLLAMA_NUM_GPU", "999"))
-LLM_FALLBACK_TO_GROQ = os.environ.get("LLM_FALLBACK_TO_GROQ", "false").lower() == "true"
-_groq_client: Groq | None = None
-
-
-def _get_groq_client() -> Groq:
-    global _groq_client
-    if _groq_client is None:
-        _groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-    return _groq_client
 
 logger = logging.getLogger(__name__)
 

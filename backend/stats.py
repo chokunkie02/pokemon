@@ -1,7 +1,7 @@
 import json
 from collections import Counter
 
-lines = open('training_data.jsonl', encoding='utf-8').readlines()
+lines = open('data/training_data.jsonl', encoding='utf-8').readlines()
 print(f'Total actions: {len(lines)}')
 
 entries = []

@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 class BehavioralLogger:
-    def __init__(self, log_file="training_data.jsonl"):
+    def __init__(self, log_file="data/training_data.jsonl"):
         # Put it in the backend folder or project root
         self.log_file = os.path.join(os.path.dirname(__file__), log_file)
 

@@ -19,25 +19,24 @@ PYTHON = sys.executable
 
 def _resolve_backend_python():
     """Pick a Python interpreter that can run backend dependencies reliably."""
-    # Priority: explicit env override -> known pyenv path -> current interpreter
+    # Priority: BACKEND_PYTHON env -> backend/venv -> current interpreter -> python on PATH.
+    # The first one that can import the backend deps wins.
     env_python = os.environ.get("BACKEND_PYTHON", "").strip()
-    pyenv_python = r"C:\Users\kt856\.PYENV\PYENV-WIN\versions\3.12.10\python.exe"
+    venv_python = os.path.join(BACKEND_DIR, "venv", "Scripts", "python.exe")
+    if env_python:
+        return env_python
 
-    candidates = [p for p in [env_python, pyenv_python, PYTHON] if p]
-    for candidate in candidates:
-        if os.path.exists(candidate):
+    candidates = [venv_python, PYTHON, shutil.which("python")]
+    existing = [c for c in candidates if c and os.path.exists(c)]
+    for candidate in existing:
+        if _preflight_backend_python(candidate)[0]:
             return candidate
-
-    # Last fallback: whatever python is on PATH
-    path_python = shutil.which("python")
-    if path_python:
-        return path_python
-    return PYTHON
+    return existing[0] if existing else PYTHON
 
 
 def _preflight_backend_python(python_exe):
     """Return (ok, message). Ensures required backend modules are importable."""
-    cmd = [python_exe, "-c", "import uvicorn, groq; print('ok')"]
+    cmd = [python_exe, "-c", "import uvicorn, llama_cpp; print('ok')"]
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
     except Exception as e:
@@ -127,7 +126,7 @@ def main():
         print("[start.py] Backend preflight failed: Python environment ยังไม่พร้อม")
         print(msg)
         print("[start.py] แนะนำ: ติดตั้ง dependency ด้วย python ที่จะแชร์กับ backend")
-        print(f"[start.py] ตัวอย่าง: {backend_python} -m pip install uvicorn groq")
+        print(f"[start.py] ตัวอย่าง: {backend_python} -m pip install -r backend/requirements.txt")
         sys.exit(1)
 
     procs = []

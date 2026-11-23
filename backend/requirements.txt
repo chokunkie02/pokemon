@@ -1,0 +1,6 @@
+fastapi>=0.115
+uvicorn>=0.30
+pydantic>=2.0
+python-dotenv>=1.0
+# GPU build (CUDA 12.x): pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124
+llama-cpp-python>=0.3.4

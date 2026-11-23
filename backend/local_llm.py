@@ -1,7 +1,11 @@
-import json
+import os
 from llama_cpp import Llama
 
-MODEL_PATH = "c:\\pokemon\\models\\qwen2.5-3b-instruct.Q4_K_M.gguf"
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.environ.get(
+    "MODEL_PATH",
+    os.path.join(_PROJECT_ROOT, "models", "qwen2.5-3b-instruct.Q4_K_M.gguf"),
+)
 
 # Singleton instance
 _llm_instance = None

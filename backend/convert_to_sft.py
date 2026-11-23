@@ -112,8 +112,8 @@ def action_to_output(action):
     return json.dumps(clean_action, ensure_ascii=False)
 
 # ===== Main Loop =====
-INPUT_FILE = "training_data_clean.jsonl"
-OUTPUT_FILE = "sft_data.jsonl"
+INPUT_FILE = "data/training_data_clean.jsonl"
+OUTPUT_FILE = "data/sft_data.jsonl"
 
 entries = []
 with open(INPUT_FILE, encoding="utf-8") as f:

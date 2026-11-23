@@ -1,7 +1,0 @@
-[
-  "Psy Shadow Test: success=False, msg=ยังไม่ใช่เทิร์นของคุณ!",
-  "X Speed Test: success=False, cost reduction count=0",
-  "Card: Charmander, Attacks: ['Ember']",
-  "Fire Spin Test: msg=ยังไม่ใช่เทิร์นของคุณ!, leftover energy=4",
-  "Auto Switch Turn logic works after Fire Spin attack!"
-]
